@@ -3,6 +3,7 @@ package com.gustavoorelio.beautytime.model;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name = "estado")
@@ -17,4 +18,8 @@ public class Estado {
 
     private String sigla;
 
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dataCriacao;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dataAtualizacao;
 }
