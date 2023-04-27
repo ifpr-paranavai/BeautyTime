@@ -1,5 +1,6 @@
 package com.gustavoorelio.beautytime.controller;
 
+import com.gustavoorelio.beautytime.model.Permissao;
 import com.gustavoorelio.beautytime.model.Usuario;
 import com.gustavoorelio.beautytime.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,12 @@ public class UsuarioController {
     public List<Usuario> buscarTodos() {
         return usuarioService.buscarTodos();
     }
+
+    @GetMapping(value = "/por-permissao/{permissao}")
+    public List<Usuario> buscarPorPermissao(@PathVariable("permissao") Permissao permissao) {
+        return usuarioService.buscarPorPermissao(permissao);
+    }
+
 
     @PostMapping(value = "/")
     public Usuario inserir(@RequestBody Usuario usuario) {

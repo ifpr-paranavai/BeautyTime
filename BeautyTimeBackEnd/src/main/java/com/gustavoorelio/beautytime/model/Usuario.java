@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Set;
 
 @Entity
 @Table(name = "usuario")
@@ -48,4 +49,9 @@ public class Usuario {
     private String fotoUsuario;
 
     private Long codigoEmpresa;
+
+    @ElementCollection(targetClass = Permissao.class, fetch = FetchType.EAGER)
+    @CollectionTable(name = "usuarioPermissao", joinColumns = @JoinColumn(name = "idUsuario"))
+    @Enumerated(EnumType.STRING)
+    private Set<Permissao> permissoes;
 }

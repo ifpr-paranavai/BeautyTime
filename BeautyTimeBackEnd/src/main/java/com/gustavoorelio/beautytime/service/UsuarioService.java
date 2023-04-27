@@ -1,5 +1,6 @@
 package com.gustavoorelio.beautytime.service;
 
+import com.gustavoorelio.beautytime.model.Permissao;
 import com.gustavoorelio.beautytime.model.Usuario;
 import com.gustavoorelio.beautytime.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,10 @@ public class UsuarioService {
         return usuarioRepository.findAll();
     }
 
+    public List<Usuario> buscarPorPermissao(Permissao permissao) {
+        return usuarioRepository.findByPermissoes(permissao);
+    }
+
     public Usuario inserir(Usuario usuario) {
         usuario.setDataCadastro(new Date());
         Usuario usuarioNovo = usuarioRepository.saveAndFlush(usuario);
@@ -33,4 +38,6 @@ public class UsuarioService {
         Usuario usuario = usuarioRepository.findById(id).get();
         usuarioRepository.delete(usuario);
     }
+
+
 }
