@@ -32,7 +32,7 @@ public class EmpresaController {
 
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<Void> excluir(@PathVariable("id") Long id) {
-        empresaService.excuir(id);
+        empresaService.excluir(id);
         return ResponseEntity.ok().build();
     }
 }

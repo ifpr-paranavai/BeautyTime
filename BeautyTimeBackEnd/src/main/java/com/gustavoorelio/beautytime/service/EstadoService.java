@@ -29,7 +29,7 @@ public class EstadoService {
         return estadoRepository.saveAndFlush(estado);
     }
 
-    public void excuir(Long id) {
+    public void excluir(Long id) {
         Estado estado = estadoRepository.findById(id).get();
         estadoRepository.delete(estado);
     }

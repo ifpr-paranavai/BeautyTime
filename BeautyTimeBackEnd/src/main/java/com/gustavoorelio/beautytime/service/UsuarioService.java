@@ -34,7 +34,7 @@ public class UsuarioService {
         return usuarioRepository.saveAndFlush(usuario);
     }
 
-    public void excuir(Long id) {
+    public void excluir(Long id) {
         Usuario usuario = usuarioRepository.findById(id).get();
         usuarioRepository.delete(usuario);
     }
