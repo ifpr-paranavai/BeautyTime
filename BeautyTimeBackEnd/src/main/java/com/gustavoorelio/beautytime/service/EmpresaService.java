@@ -12,25 +12,25 @@ import java.util.List;
 public class EmpresaService {
 
     @Autowired
-    private EmpresaRepository cidadeRepository;
+    private EmpresaRepository empresaRepository;
 
     public List<Empresa> buscarTodos() {
-        return cidadeRepository.findAll();
+        return empresaRepository.findAll();
     }
 
-    public Empresa inserir(Empresa cidade) {
-        cidade.setDataCadastro(new Date());
-        Empresa cidadeNovo = cidadeRepository.saveAndFlush(cidade);
-        return cidadeNovo;
+    public Empresa inserir(Empresa empresa) {
+        empresa.setDataCadastro(new Date());
+        Empresa empresaNovo = empresaRepository.saveAndFlush(empresa);
+        return empresaNovo;
     }
 
-    public Empresa alterar(Empresa cidade) {
-        cidade.setDataCadastro(new Date());
-        return cidadeRepository.saveAndFlush(cidade);
+    public Empresa alterar(Empresa empresa) {
+        empresa.setDataCadastro(new Date());
+        return empresaRepository.saveAndFlush(empresa);
     }
 
     public void excuir(Long id) {
-        Empresa cidade = cidadeRepository.findById(id).get();
-        cidadeRepository.delete(cidade);
+        Empresa empresa = empresaRepository.findById(id).get();
+        empresaRepository.delete(empresa);
     }
 }
