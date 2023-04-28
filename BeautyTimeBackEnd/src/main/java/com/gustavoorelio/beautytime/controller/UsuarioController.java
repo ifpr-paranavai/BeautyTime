@@ -39,7 +39,7 @@ public class UsuarioController {
 
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<Void> excluir(@PathVariable("id") Long id) {
-        usuarioService.excuir(id);
+        usuarioService.excluir(id);
         return ResponseEntity.ok().build();
     }
 }

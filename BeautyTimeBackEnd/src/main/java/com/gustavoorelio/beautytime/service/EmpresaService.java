@@ -29,7 +29,7 @@ public class EmpresaService {
         return empresaRepository.saveAndFlush(empresa);
     }
 
-    public void excuir(Long id) {
+    public void excluir(Long id) {
         Empresa empresa = empresaRepository.findById(id).get();
         empresaRepository.delete(empresa);
     }
