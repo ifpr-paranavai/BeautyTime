@@ -1,11 +1,11 @@
 import React  from 'react';
 import { Link } from 'react-router-dom';
 import classNames from 'classnames';
-import { LoginService } from './service/util/LoginService';
+
 
 export const AppTopbar = (props) => {
 
-    const loginService = new LoginService();
+
 
     return (
         <div className="layout-topbar">
@@ -36,10 +36,10 @@ export const AppTopbar = (props) => {
                         </button>
                     </li>
                     <li>
-                        <button className="p-link layout-topbar-button" onClick={()=>loginService.sair()}>
-                            <i className="pi pi-user"/>
-                            <span>Sair</span>
-                        </button>
+                        {/*<button className="p-link layout-topbar-button" onClick={()=>loginService.sair()}>*/}
+                        {/*    <i className="pi pi-user"/>*/}
+                        {/*    <span>Sair</span>*/}
+                        {/*</button>*/}
                     </li>
                 </ul>
         </div>
