@@ -2,6 +2,7 @@ package com.gustavoorelio.beautytime.controller;
 
 import com.gustavoorelio.beautytime.model.Funcionario;
 import com.gustavoorelio.beautytime.model.Usuario;
+import com.gustavoorelio.beautytime.repository.FuncionarioRepository;
 import com.gustavoorelio.beautytime.service.FuncionarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -11,13 +12,13 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/beautytime/funcionario")
-public class FuncionarioController extends UsuarioController {
+public class FuncionarioController {
 
     @Autowired
     private FuncionarioService funcionarioService;
 
     @GetMapping(value = "/")
-    public List<Usuario> buscarTodos() {
+    public List<Funcionario> buscarTodos() {
         return funcionarioService.buscarTodos();
     }
 

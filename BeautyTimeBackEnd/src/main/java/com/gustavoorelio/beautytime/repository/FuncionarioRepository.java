@@ -1,5 +1,7 @@
 package com.gustavoorelio.beautytime.repository;
 
-public interface FuncionarioRepository extends UsuarioRepository {
+import com.gustavoorelio.beautytime.model.Funcionario;
+import org.springframework.data.jpa.repository.JpaRepository;
 
+public interface FuncionarioRepository extends JpaRepository<Funcionario, Long> {
 }
