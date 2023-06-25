@@ -1,6 +1,7 @@
 package com.gustavoorelio.beautytime.controller;
 
 import com.gustavoorelio.beautytime.model.Cliente;
+import com.gustavoorelio.beautytime.model.Cliente;
 import com.gustavoorelio.beautytime.model.Usuario;
 import com.gustavoorelio.beautytime.service.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,13 +12,13 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/beautytime/cliente")
-public class ClienteController extends UsuarioController{
+public class ClienteController {
 
     @Autowired
     private ClienteService clienteService;
 
     @GetMapping(value = "/")
-    public List<Usuario> buscarTodos() {
+    public List<Cliente> buscarTodos() {
         return clienteService.buscarTodos();
     }
 
