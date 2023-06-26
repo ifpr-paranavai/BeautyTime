@@ -16,21 +16,25 @@ public class CidadeController {
     private CidadeService cidadeService;
 
     @GetMapping(value = "/")
+    @CrossOrigin("http://localhost:3000")
     public List<Cidade> buscarTodos() {
         return cidadeService.buscarTodos();
     }
 
     @PostMapping(value = "/")
+    @CrossOrigin("http://localhost:3000")
     public Cidade inserir(@RequestBody Cidade cidade) {
         return cidadeService.inserir(cidade);
     }
 
     @PutMapping(value = "/")
+    @CrossOrigin("http://localhost:3000")
     public Cidade alterar(@RequestBody Cidade cidade) {
         return cidadeService.alterar(cidade);
     }
 
     @DeleteMapping(value = "/{id}")
+    @CrossOrigin("http://localhost:3000")
     public ResponseEntity<Void> excluir(@PathVariable("id") Long id) {
         cidadeService.excluir(id);
         return ResponseEntity.ok().build();

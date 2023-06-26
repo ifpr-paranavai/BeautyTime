@@ -18,21 +18,25 @@ public class ClienteController {
     private ClienteService clienteService;
 
     @GetMapping(value = "/")
+    @CrossOrigin("http://localhost:3000")
     public List<Cliente> buscarTodos() {
         return clienteService.buscarTodos();
     }
 
     @PostMapping(value = "/")
+    @CrossOrigin("http://localhost:3000")
     public Cliente inserir(@RequestBody Cliente cliente) {
         return clienteService.inserir(cliente);
     }
 
     @PutMapping(value = "/")
+    @CrossOrigin("http://localhost:3000")
     public Cliente alterar(@RequestBody Cliente cliente) {
         return clienteService.alterar(cliente);
     }
 
     @DeleteMapping(value = "/{id}")
+    @CrossOrigin("http://localhost:3000")
     public ResponseEntity<Void> excluir(@PathVariable("id") Long id) {
         clienteService.excluir(id);
         return ResponseEntity.ok().build();

@@ -16,21 +16,25 @@ public class EmpresaController {
     private EmpresaService empresaService;
 
     @GetMapping(value = "/")
+    @CrossOrigin("http://localhost:3000")
     public List<Empresa> buscarTodos() {
         return empresaService.buscarTodos();
     }
 
     @PostMapping(value = "/")
+    @CrossOrigin("http://localhost:3000")
     public Empresa inserir(@RequestBody Empresa empresa) {
         return empresaService.inserir(empresa);
     }
 
     @PutMapping(value = "/")
+    @CrossOrigin("http://localhost:3000")
     public Empresa alterar(@RequestBody Empresa empresa) {
         return empresaService.alterar(empresa);
     }
 
     @DeleteMapping(value = "/{id}")
+    @CrossOrigin("http://localhost:3000")
     public ResponseEntity<Void> excluir(@PathVariable("id") Long id) {
         empresaService.excluir(id);
         return ResponseEntity.ok().build();
