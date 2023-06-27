@@ -38,7 +38,7 @@ import {Tooltip} from 'primereact/tooltip';
 
 import Estado from './pages/cadastros/Estado';
 import Cidade from './pages/cadastros/Cidade';
-
+import Empresa from './pages/cadastros/Empresa';
 
 import 'primereact/resources/primereact.css';
 import 'primeicons/primeicons.css';
@@ -167,11 +167,15 @@ const App = () => {
         },
         {
             label: 'Cadastros',
-            items: [{
-                label: 'Estados', icon: 'pi pi-fw pi-home', to: '/estados'
-            },
+            items: [
+                {
+                    label: 'Estados', icon: 'pi pi-fw pi-home', to: '/estados'
+                },
                 {
                     label: 'Cidades', icon: 'pi pi-fw pi-home', to: '/cidades'
+                },
+                {
+                    label: 'Empresas', icon: 'pi pi-fw pi-home', to: '/empresas'
                 },
             ]
         },
@@ -342,6 +346,7 @@ const App = () => {
                     <Route path="/documentation" component={Documentation}/>
                     <Route path="/estados" component={Estado}/>
                     <Route path="/cidades" component={Cidade}/>
+                    <Route path="/empresas" component={Empresa}/>
                 </div>
 
                 <AppFooter layoutColorMode={layoutColorMode}/>
