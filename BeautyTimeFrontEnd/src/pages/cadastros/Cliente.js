@@ -7,26 +7,25 @@ import {Button} from 'primereact/button';
 import {Toolbar} from 'primereact/toolbar';
 import {Dialog} from 'primereact/dialog';
 import {InputText} from 'primereact/inputtext';
-import {EmpresaService} from '../../service/cadastros/EmpresaService';
+import {ClienteService} from '../../service/cadastros/ClienteService';
 import ColunaOpcoes from '../../components/ColunaOpcoes';
 import {CidadeService} from "../../service/cadastros/CidadeService";
 import {Dropdown} from "primereact/dropdown";
 import {InputMask} from "primereact/inputmask";
 
-const Empresa = () => {
+const Cliente = () => {
     let objetoNovo = {
         nome: '',
-        cnpj: '',
+        cpf: '',
         telefone: '',
         endereco: '',
         numero: '',
         cep: '',
-        cidade: '',
-        bairro: ''
+        bairro: '',
+        email: ''
     };
 
     const [objetos, setObjetos] = useState(null);
-    const [cidades, setCidades] = useState(null);
     const [objetoDialog, setObjetoDialog] = useState(false);
     const [objetoDeleteDialog, setObjetoDeleteDialog] = useState(false);
     const [objeto, setObjeto] = useState(objetoNovo);
@@ -34,14 +33,7 @@ const Empresa = () => {
     const [globalFilter, setGlobalFilter] = useState(null);
     const toast = useRef(null);
     const dt = useRef(null);
-    const objetoService = new EmpresaService();
-    const cidadeService = new CidadeService();
-
-    useEffect(() => {
-        cidadeService.listarTodos().then(res => {
-            setCidades(res.data);
-        });
-    }, []);
+    const objetoService = new ClienteService();
 
     useEffect(() => {
         if (objetos == null) {
@@ -123,7 +115,7 @@ const Empresa = () => {
         return (
             <React.Fragment>
                 <div className="my-2">
-                    <Button label="Novo Empresa" icon="pi pi-plus" className="p-button-success mr-2" onClick={openNew}/>
+                    <Button label="Novo Cliente" icon="pi pi-plus" className="p-button-success mr-2" onClick={openNew}/>
 
                 </div>
             </React.Fragment>
@@ -148,11 +140,11 @@ const Empresa = () => {
         );
     }
 
-    const cnpjBodyTemplate = (rowData) => {
+    const cpfBodyTemplate = (rowData) => {
         return (
             <>
-                <span className="p-column-title">Nome</span>
-                {rowData.cnpj}
+                <span className="p-column-title">CPF</span>
+                {rowData.cpf}
             </>
         );
     }
@@ -166,19 +158,10 @@ const Empresa = () => {
         );
     }
 
-    const cidadeBodyTemplate = (rowData) => {
-        return (
-            <>
-                <span className="p-column-title">Estado</span>
-                {rowData.cidade && (rowData.cidade.nome)}
-            </>
-        );
-    }
-
 
     const header = (
         <div className="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
-            <h5 className="m-0">Empresas Cadastradas</h5>
+            <h5 className="m-0">Clientes Cadastrados</h5>
             <span className="block mt-2 md:mt-0 p-input-icon-left">
                 <i className="pi pi-search"/>
                 <InputText type="search" onInput={(e) => setGlobalFilter(e.target.value)} placeholder="Buscar..."/>
@@ -214,9 +197,8 @@ const Empresa = () => {
                                globalFilter={globalFilter} emptyMessage="Sem objetos cadastrados." header={header} responsiveLayout="scroll">
                         <Column field="id" header="ID" sortable body={idBodyTemplate} headerStyle={{width: '14%', minWidth: '10rem'}}></Column>
                         <Column field="nome" header="Nome" sortable body={nomeBodyTemplate} headerStyle={{width: '14%', minWidth: '10rem'}}></Column>
-                        <Column field="cnpj" header="Cnpj" sortable body={cnpjBodyTemplate} headerStyle={{width: '14%', minWidth: '10rem'}}></Column>
+                        <Column field="cpf" header="cpf" sortable body={cpfBodyTemplate} headerStyle={{width: '14%', minWidth: '10rem'}}></Column>
                         <Column field="telefone" header="Telefone" sortable body={telefoneBodyTemplate} headerStyle={{width: '14%', minWidth: '10rem'}}></Column>
-                        <Column field="cidade" header="Cidade" body={cidadeBodyTemplate} headerStyle={{width: '14%', minWidth: '10rem'}}></Column>
                         <Column body={rowData => {
                             return <ColunaOpcoes rowData={rowData} editObjeto={editObjeto} confirmDeleteObjeto={confirmDeleteObjeto}/>
                         }}></Column>
@@ -230,9 +212,9 @@ const Empresa = () => {
                             {submitted && !objeto.name && <small className="p-invalid">Nome é Obrigatório.</small>}
                         </div>
                         <div className="field">
-                            <label htmlFor="cnpj">Cnpj</label>
-                            <InputMask mask="99.999.999/9999-99" value={objeto.cnpj} onChange={(e) => onInputChange(e, 'cnpj')} required autoFocus className={classNames({'p-invalid': submitted && !objeto.cnpj})}/>
-                            {submitted && !objeto.name && <small className="p-invalid">Cnpj é Obrigatório.</small>}
+                            <label htmlFor="cpf">Cpf</label>
+                            <InputMask mask="999.999.999-99" value={objeto.cpf} onChange={(e) => onInputChange(e, 'cpf')} required autoFocus className={classNames({'p-invalid': submitted && !objeto.cpf})}/>
+                            {submitted && !objeto.name && <small className="p-invalid">Cpf é Obrigatório.</small>}
                         </div>
                         <div className="field">
                             <label htmlFor="telefone">Telefone</label>
@@ -256,13 +238,14 @@ const Empresa = () => {
                             {submitted && !objeto.name && <small className="p-invalid">Cep é Obrigatório.</small>}
                         </div>
                         <div className="field">
-                            <label htmlFor="nome">Cidade</label>
-                            <Dropdown optionLabel="nome" value={objeto.cidade} options={cidades} filter onChange={(e) => onInputChange(e, 'cidade')} placeholder="Selecione uma Cidade"/>
-                        </div>
-                        <div className="field">
                             <label htmlFor="bairro">Bairro</label>
                             <InputText id="bairro" value={objeto.bairro} onChange={(e) => onInputChange(e, 'bairro')} required autoFocus className={classNames({'p-invalid': submitted && !objeto.bairro})}/>
                             {submitted && !objeto.name && <small className="p-invalid">Bairro é Obrigatório.</small>}
+                        </div>
+                        <div className="field">
+                            <label htmlFor="email">E-Mail</label>
+                            <InputText id="email" value={objeto.email} onChange={(e) => onInputChange(e, 'email')} required autoFocus className={classNames({'p-invalid': submitted && !objeto.email})}/>
+                            {submitted && !objeto.name && <small className="p-invalid">Email é Obrigatório.</small>}
                         </div>
 
 
@@ -286,4 +269,4 @@ const comparisonFn = function (prevProps, nextProps) {
     return prevProps.location.pathname === nextProps.location.pathname;
 };
 
-export default React.memo(Empresa, comparisonFn);
+export default React.memo(Cliente, comparisonFn);
