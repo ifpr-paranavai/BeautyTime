@@ -12,6 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/beautytime/cliente")
+@CrossOrigin
 public class ClienteController {
 
     @Autowired

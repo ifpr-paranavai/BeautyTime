@@ -10,6 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/beautytime/empresa")
+@CrossOrigin
 public class EmpresaController {
 
     @Autowired
