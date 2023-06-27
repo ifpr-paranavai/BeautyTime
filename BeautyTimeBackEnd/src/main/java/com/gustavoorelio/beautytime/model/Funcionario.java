@@ -8,7 +8,6 @@ import java.util.Date;
 @Entity
 @Table(name = "funcionario")
 @Data
-@PrimaryKeyJoinColumn(name = "id")
 public class Funcionario {
 
     @Id
