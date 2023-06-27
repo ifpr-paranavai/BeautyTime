@@ -39,6 +39,7 @@ import {Tooltip} from 'primereact/tooltip';
 import Estado from './pages/cadastros/Estado';
 import Cidade from './pages/cadastros/Cidade';
 import Empresa from './pages/cadastros/Empresa';
+import Cliente from './pages/cadastros/Cliente';
 
 import 'primereact/resources/primereact.css';
 import 'primeicons/primeicons.css';
@@ -169,13 +170,16 @@ const App = () => {
             label: 'Cadastros',
             items: [
                 {
-                    label: 'Estados', icon: 'pi pi-fw pi-home', to: '/estados'
-                },
-                {
                     label: 'Cidades', icon: 'pi pi-fw pi-home', to: '/cidades'
                 },
                 {
+                    label: 'Clientes', icon: 'pi pi-fw pi-home', to: '/clientes'
+                },
+                {
                     label: 'Empresas', icon: 'pi pi-fw pi-home', to: '/empresas'
+                },
+                {
+                    label: 'Estados', icon: 'pi pi-fw pi-home', to: '/estados'
                 },
             ]
         },
@@ -221,31 +225,10 @@ const App = () => {
             <div className="layout-main-container">
                 <div className="layout-main">
                     <Route path="/" exact render={() => <Dashboard colorMode={layoutColorMode} location={location}/>}/>
-                    <Route path="/formlayout" component={FormLayoutDemo}/>
-                    <Route path="/input" component={InputDemo}/>
-                    <Route path="/floatlabel" component={FloatLabelDemo}/>
-                    <Route path="/invalidstate" component={InvalidStateDemo}/>
-                    <Route path="/button" component={ButtonDemo}/>
-                    <Route path="/table" component={TableDemo}/>
-                    <Route path="/list" component={ListDemo}/>
-                    <Route path="/tree" component={TreeDemo}/>
-                    <Route path="/panel" component={PanelDemo}/>
-                    <Route path="/overlay" component={OverlayDemo}/>
-                    <Route path="/media" component={MediaDemo}/>
-                    <Route path="/menu" component={MenuDemo}/>
-                    <Route path="/messages" component={MessagesDemo}/>
-                    <Route path="/blocks" component={BlocksDemo}/>
-                    <Route path="/icons" component={IconsDemo}/>
-                    <Route path="/file" component={FileDemo}/>
-                    <Route path="/chart" render={() => <ChartDemo colorMode={layoutColorMode} location={location}/>}/>
-                    <Route path="/misc" component={MiscDemo}/>
-                    <Route path="/timeline" component={TimelineDemo}/>
-                    <Route path="/crud" component={Crud}/>
-                    <Route path="/empty" component={EmptyPage}/>
-                    <Route path="/documentation" component={Documentation}/>
                     <Route path="/estados" component={Estado}/>
                     <Route path="/cidades" component={Cidade}/>
                     <Route path="/empresas" component={Empresa}/>
+                    <Route path="/clientes" component={Cliente}/>
                 </div>
 
                 <AppFooter layoutColorMode={layoutColorMode}/>
