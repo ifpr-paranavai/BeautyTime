@@ -1,30 +1,37 @@
 import axios from 'axios';
 
-export class ServiceBase{
+export class ServiceBase {
 
 
-    constructor(urlBase){
-        this.url = process.env.REACT_APP_URL_API+'/'+urlBase+'/';
+    constructor(urlBase) {
+        this.url = urlBase + '/';
+        this.inicializarAxios();
     }
 
+    inicializarAxios() {
+        this.axiosInstance = axios.create({
+            baseURL: process.env.REACT_APP_URL_API,
+        });
+
+    }
 
     listarTodos() {
-        return axios.get(this.url);
+        return this.axiosInstance.get(this.url);
     }
 
     buscarId(id) {
-        return axios.get(this.url+id);
+        return this.axiosInstance.get(this.url + id);
     }
 
     inserir(objeto) {
-        return axios.post(this.url,objeto);
+        return this.axiosInstance.post(this.url, objeto);
     }
 
     alterar(objeto) {
-        return axios.put(this.url,objeto);
+        return this.axiosInstance.put(this.url, objeto);
     }
 
     excluir(id) {
-        return axios.delete(this.url+id);
+        return this.axiosInstance.delete(this.url + id);
     }
 }
