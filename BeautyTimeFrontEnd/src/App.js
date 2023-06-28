@@ -40,6 +40,7 @@ import Estado from './pages/cadastros/Estado';
 import Cidade from './pages/cadastros/Cidade';
 import Empresa from './pages/cadastros/Empresa';
 import Cliente from './pages/cadastros/Cliente';
+import Funcionario from './pages/cadastros/Funcionario';
 
 import 'primereact/resources/primereact.css';
 import 'primeicons/primeicons.css';
@@ -170,16 +171,19 @@ const App = () => {
             label: 'Cadastros',
             items: [
                 {
-                    label: 'Cidades', icon: 'pi pi-fw pi-home', to: '/cidades'
+                    label: 'Cidades', icon: 'pi pi-fw pi-map', to: '/cidades'
                 },
                 {
-                    label: 'Clientes', icon: 'pi pi-fw pi-home', to: '/clientes'
+                    label: 'Clientes', icon: 'pi pi-fw pi-users', to: '/clientes'
                 },
                 {
                     label: 'Empresas', icon: 'pi pi-fw pi-home', to: '/empresas'
                 },
                 {
-                    label: 'Estados', icon: 'pi pi-fw pi-home', to: '/estados'
+                    label: 'Estados', icon: 'pi pi-fw pi-map', to: '/estados'
+                },
+                {
+                    label: 'Funcionários', icon: 'pi pi-fw pi-users', to: '/funcionarios'
                 },
             ]
         },
@@ -229,6 +233,7 @@ const App = () => {
                     <Route path="/cidades" component={Cidade}/>
                     <Route path="/empresas" component={Empresa}/>
                     <Route path="/clientes" component={Cliente}/>
+                    <Route path="/funcionarios" component={Funcionario}/>
                 </div>
 
                 <AppFooter layoutColorMode={layoutColorMode}/>
