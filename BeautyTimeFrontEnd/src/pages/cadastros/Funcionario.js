@@ -7,18 +7,27 @@ import {Button} from 'primereact/button';
 import {Toolbar} from 'primereact/toolbar';
 import {Dialog} from 'primereact/dialog';
 import {InputText} from 'primereact/inputtext';
-import {Dropdown} from 'primereact/dropdown';
-import {CidadeService} from '../../service/cadastros/CidadeService';
-import {EstadoService} from '../../service/cadastros/EstadoService';
+import {FuncionarioService} from '../../service/cadastros/FuncionarioService';
+import ColunaOpcoes from '../../components/ColunaOpcoes';
+import {CidadeService} from "../../service/cadastros/CidadeService";
+import {Dropdown} from "primereact/dropdown";
+import {InputMask} from "primereact/inputmask";
 
-const Cidade = () => {
+const Funcionario = () => {
     let objetoNovo = {
         nome: '',
-        estado: ''
+        cpf: '',
+        telefone: '',
+        endereco: '',
+        numero: '',
+        cep: '',
+        bairro: '',
+        email: '',
+        cargo: '',
+        salario: ''
     };
 
     const [objetos, setObjetos] = useState(null);
-    const [estados, setEstados] = useState(null);
     const [objetoDialog, setObjetoDialog] = useState(false);
     const [objetoDeleteDialog, setObjetoDeleteDialog] = useState(false);
     const [objeto, setObjeto] = useState(objetoNovo);
@@ -26,14 +35,7 @@ const Cidade = () => {
     const [globalFilter, setGlobalFilter] = useState(null);
     const toast = useRef(null);
     const dt = useRef(null);
-    const objetoService = new CidadeService();
-    const estadoService = new EstadoService();
-
-    useEffect(() => {
-        estadoService.listarTodos().then(res => {
-            setEstados(res.data);
-        });
-    }, []);
+    const objetoService = new FuncionarioService();
 
     useEffect(() => {
         if (objetos == null) {
@@ -115,7 +117,7 @@ const Cidade = () => {
         return (
             <React.Fragment>
                 <div className="my-2">
-                    <Button label="Nova Cidade" icon="pi pi-plus" className="p-button-success mr-2" onClick={openNew}/>
+                    <Button label="Novo Funcionario" icon="pi pi-plus" className="p-button-success mr-2" onClick={openNew}/>
 
                 </div>
             </React.Fragment>
@@ -140,28 +142,37 @@ const Cidade = () => {
         );
     }
 
-    const estadoBodyTemplate = (rowData) => {
+    const cpfBodyTemplate = (rowData) => {
         return (
             <>
-                <span className="p-column-title">Estado</span>
-                {rowData.estado && (rowData.estado.nome + '/' + rowData.estado.sigla)}
+                <span className="p-column-title">CPF</span>
+                {rowData.cpf}
             </>
         );
     }
 
-    const actionBodyTemplate = (rowData) => {
+    const telefoneBodyTemplate = (rowData) => {
         return (
-            <div className="actions">
-                <Button icon="pi pi-pencil" className="p-button-rounded p-button-success mr-2" onClick={() => editObjeto(rowData)}/>
-                <Button icon="pi pi-trash" className="p-button-rounded p-button-danger mt-2" onClick={() => confirmDeleteObjeto(rowData)}/>
-            </div>
+            <>
+                <span className="p-column-title">Nome</span>
+                {rowData.telefone}
+            </>
+        );
+    }
+
+    const cargoBodyTemplate = (rowData) => {
+        return (
+            <>
+                <span className="p-column-title">Cargo</span>
+                {rowData.cargo}
+            </>
         );
     }
 
 
     const header = (
         <div className="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
-            <h5 className="m-0">Cidades Cadastradas</h5>
+            <h5 className="m-0">Funcionários Cadastrados</h5>
             <span className="block mt-2 md:mt-0 p-input-icon-left">
                 <i className="pi pi-search"/>
                 <InputText type="search" onInput={(e) => setGlobalFilter(e.target.value)} placeholder="Buscar..."/>
@@ -197,8 +208,12 @@ const Cidade = () => {
                                globalFilter={globalFilter} emptyMessage="Sem objetos cadastrados." header={header} responsiveLayout="scroll">
                         <Column field="id" header="ID" sortable body={idBodyTemplate} headerStyle={{width: '14%', minWidth: '10rem'}}></Column>
                         <Column field="nome" header="Nome" sortable body={nomeBodyTemplate} headerStyle={{width: '14%', minWidth: '10rem'}}></Column>
-                        <Column field="estado" header="Estado" body={estadoBodyTemplate} headerStyle={{width: '14%', minWidth: '10rem'}}></Column>
-                        <Column body={actionBodyTemplate}></Column>
+                        <Column field="cpf" header="cpf" sortable body={cpfBodyTemplate} headerStyle={{width: '14%', minWidth: '10rem'}}></Column>
+                        <Column field="telefone" header="Telefone" sortable body={telefoneBodyTemplate} headerStyle={{width: '14%', minWidth: '10rem'}}></Column>
+                        <Column field="cargo" header="Cargo" sortable body={cargoBodyTemplate} headerStyle={{width: '14%', minWidth: '10rem'}}></Column>
+                        <Column body={rowData => {
+                            return <ColunaOpcoes rowData={rowData} editObjeto={editObjeto} confirmDeleteObjeto={confirmDeleteObjeto}/>
+                        }}></Column>
                     </DataTable>
 
                     <Dialog visible={objetoDialog} style={{width: '450px'}} header="Cadastrar/Editar" modal className="p-fluid" footer={objetoDialogFooter} onHide={hideDialog}>
@@ -208,11 +223,53 @@ const Cidade = () => {
                             <InputText id="nome" value={objeto.nome} onChange={(e) => onInputChange(e, 'nome')} required autoFocus className={classNames({'p-invalid': submitted && !objeto.nome})}/>
                             {submitted && !objeto.name && <small className="p-invalid">Nome é Obrigatório.</small>}
                         </div>
-
                         <div className="field">
-                            <label htmlFor="nome">Estado</label>
-                            <Dropdown optionLabel="nome" value={objeto.estado} options={estados} filter onChange={(e) => onInputChange(e, 'estado')} placeholder="Selecione um Estado"/>
+                            <label htmlFor="cpf">Cpf</label>
+                            <InputMask mask="999.999.999-99" value={objeto.cpf} onChange={(e) => onInputChange(e, 'cpf')} required autoFocus className={classNames({'p-invalid': submitted && !objeto.cpf})}/>
+                            {submitted && !objeto.name && <small className="p-invalid">Cpf é Obrigatório.</small>}
                         </div>
+                        <div className="field">
+                            <label htmlFor="telefone">Telefone</label>
+                            <InputMask mask="(99) 99999-9999" id="telefone" value={objeto.telefone} onChange={(e) => onInputChange(e, 'telefone')} required autoFocus className={classNames({'p-invalid': submitted && !objeto.telefone})}/>
+
+                            {submitted && !objeto.name && <small className="p-invalid">Telefone é Obrigatório.</small>}
+                        </div>
+                        <div className="field">
+                            <label htmlFor="endereco">Endereço</label>
+                            <InputText id="endereco" value={objeto.endereco} onChange={(e) => onInputChange(e, 'endereco')} required autoFocus className={classNames({'p-invalid': submitted && !objeto.endereco})}/>
+                            {submitted && !objeto.name && <small className="p-invalid">Endereço é Obrigatório.</small>}
+                        </div>
+                        <div className="field">
+                            <label htmlFor="numero">Numero</label>
+                            <InputText id="numero" value={objeto.numero} onChange={(e) => onInputChange(e, 'numero')} required autoFocus className={classNames({'p-invalid': submitted && !objeto.numero})}/>
+                            {submitted && !objeto.name && <small className="p-invalid">Numero é Obrigatório.</small>}
+                        </div>
+                        <div className="field">
+                            <label htmlFor="cep">Cep</label>
+                            <InputMask mask="99999-999" id="cep" value={objeto.cep} onChange={(e) => onInputChange(e, 'cep')} required autoFocus className={classNames({'p-invalid': submitted && !objeto.cep})}/>
+                            {submitted && !objeto.name && <small className="p-invalid">Cep é Obrigatório.</small>}
+                        </div>
+                        <div className="field">
+                            <label htmlFor="bairro">Bairro</label>
+                            <InputText id="bairro" value={objeto.bairro} onChange={(e) => onInputChange(e, 'bairro')} required autoFocus className={classNames({'p-invalid': submitted && !objeto.bairro})}/>
+                            {submitted && !objeto.name && <small className="p-invalid">Bairro é Obrigatório.</small>}
+                        </div>
+                        <div className="field">
+                            <label htmlFor="email">E-Mail</label>
+                            <InputText id="email" value={objeto.email} onChange={(e) => onInputChange(e, 'email')} required autoFocus className={classNames({'p-invalid': submitted && !objeto.email})}/>
+                            {submitted && !objeto.name && <small className="p-invalid">Email é Obrigatório.</small>}
+                        </div>
+                        <div className="field">
+                            <label htmlFor="cargo">Cargo</label>
+                            <InputText id="cargo" value={objeto.cargo} onChange={(e) => onInputChange(e, 'cargo')} required autoFocus className={classNames({'p-invalid': submitted && !objeto.cargo})}/>
+                            {submitted && !objeto.name && <small className="p-invalid">Cargo é Obrigatório.</small>}
+                        </div>
+                        <div className="field">
+                            <label htmlFor="salario">Salário</label>
+                            <InputText id="salario" value={objeto.salario} onChange={(e) => onInputChange(e, 'salario')} required autoFocus className={classNames({'p-invalid': submitted && !objeto.salario})}/>
+                            {submitted && !objeto.name && <small className="p-invalid">Salário é Obrigatório.</small>}
+                        </div>
+
 
                     </Dialog>
 
@@ -234,4 +291,4 @@ const comparisonFn = function (prevProps, nextProps) {
     return prevProps.location.pathname === nextProps.location.pathname;
 };
 
-export default React.memo(Cidade, comparisonFn);
+export default React.memo(Funcionario, comparisonFn);
