@@ -102,16 +102,16 @@ const Estado = () => {
         setObjeto(_objeto);
     }
 
-    const leftToolbarTemplate = () => {
-        return (
-            <React.Fragment>
-                <div className="my-2">
-                    <Button label="Novo Estado" icon="pi pi-plus" className="p-button-success mr-2" onClick={openNew}/>
-
-                </div>
-            </React.Fragment>
-        )
-    }
+    // const leftToolbarTemplate = () => {
+    //     return (
+    //         <React.Fragment>
+    //             <div className="my-2">
+    //                 <Button label="Novo Estado" icon="pi pi-plus" className="p-button-success mr-2" onClick={openNew}/>
+    //
+    //             </div>
+    //         </React.Fragment>
+    //     )
+    // }
 
     const idBodyTemplate = (rowData) => {
         return (
@@ -142,7 +142,7 @@ const Estado = () => {
 
     const header = (
         <div className="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
-            <h5 className="m-0">Estados Cadastrados</h5>
+            <h5 className="m-0">Lista de Estados</h5>
             <span className="block mt-2 md:mt-0 p-input-icon-left">
                 <i className="pi pi-search"/>
                 <InputText type="search" onInput={(e) => setGlobalFilter(e.target.value)} placeholder="Buscar..."/>
@@ -169,7 +169,7 @@ const Estado = () => {
             <div className="col-12">
                 <div className="card">
                     <Toast ref={toast}/>
-                    <Toolbar className="mb-4" left={leftToolbarTemplate}></Toolbar>
+                    {/*<Toolbar className="mb-4" left={leftToolbarTemplate}></Toolbar>*/}
 
                     <DataTable ref={dt} value={objetos}
                                dataKey="id" paginator rows={10} rowsPerPageOptions={[5, 10, 25]} className="datatable-responsive"

@@ -19,13 +19,11 @@ public class CidadeService {
     }
 
     public Cidade inserir(Cidade cidade) {
-        cidade.setDataCriacao(new Date());
         Cidade cidadeNovo = cidadeRepository.saveAndFlush(cidade);
         return cidadeNovo;
     }
 
     public Cidade alterar(Cidade cidade) {
-        cidade.setDataCriacao(new Date());
         return cidadeRepository.saveAndFlush(cidade);
     }
 
