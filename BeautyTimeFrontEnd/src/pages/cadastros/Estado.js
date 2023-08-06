@@ -13,7 +13,7 @@ import ColunaOpcoes from '../../components/ColunaOpcoes';
 const Estado = () => {
     let objetoNovo = {
         nome: '',
-        sigla: ''
+        uf: ''
     };
 
     const [objetos, setObjetos] = useState(null);
@@ -135,7 +135,7 @@ const Estado = () => {
         return (
             <>
                 <span className="p-column-title">Sigla</span>
-                {rowData.sigla}
+                {rowData.uf}
             </>
         );
     }

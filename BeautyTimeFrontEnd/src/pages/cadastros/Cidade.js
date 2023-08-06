@@ -14,7 +14,7 @@ import {EstadoService} from '../../service/cadastros/EstadoService';
 const Cidade = () => {
     let objetoNovo = {
         nome: '',
-        estado: ''
+        uf: ''
     };
 
     const [objetos, setObjetos] = useState(null);
@@ -144,7 +144,7 @@ const Cidade = () => {
         return (
             <>
                 <span className="p-column-title">Estado</span>
-                {rowData.estado && (rowData.estado.nome + '/' + rowData.estado.sigla)}
+                {rowData.uf && (rowData.uf.nome + '/' + rowData.uf.uf)}
             </>
         );
     }
