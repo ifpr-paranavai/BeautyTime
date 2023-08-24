@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import classNames from 'classnames';
 import {Route, useLocation} from 'react-router-dom';
 import {CSSTransition} from 'react-transition-group';
@@ -9,29 +9,6 @@ import {AppMenu} from './AppMenu';
 import {AppConfig} from './AppConfig';
 
 import Dashboard from './components/Dashboard';
-import ButtonDemo from './components/ButtonDemo';
-import ChartDemo from './components/ChartDemo';
-import Documentation from './components/Documentation';
-import FileDemo from './components/FileDemo';
-import FloatLabelDemo from './components/FloatLabelDemo';
-import FormLayoutDemo from './components/FormLayoutDemo';
-import InputDemo from './components/InputDemo';
-import ListDemo from './components/ListDemo';
-import MenuDemo from './components/MenuDemo';
-import MessagesDemo from './components/MessagesDemo';
-import MiscDemo from './components/MiscDemo';
-import OverlayDemo from './components/OverlayDemo';
-import MediaDemo from './components/MediaDemo';
-import PanelDemo from './components/PanelDemo';
-import TableDemo from './components/TableDemo';
-import TreeDemo from './components/TreeDemo';
-import InvalidStateDemo from './components/InvalidStateDemo';
-import BlocksDemo from './components/BlocksDemo';
-import IconsDemo from './components/IconsDemo';
-
-import Crud from './pages/Crud';
-import EmptyPage from './pages/EmptyPage';
-import TimelineDemo from './pages/TimelineDemo';
 
 import PrimeReact from 'primereact/api';
 import {Tooltip} from 'primereact/tooltip';
@@ -40,6 +17,7 @@ import Estado from './pages/cadastros/Estado';
 import Cidade from './pages/cadastros/Cidade';
 import Cliente from './pages/cadastros/Cliente';
 import Funcionario from './pages/cadastros/Funcionario';
+import Servico from './pages/cadastros/Servico';
 
 import 'primereact/resources/primereact.css';
 import 'primeicons/primeicons.css';
@@ -181,6 +159,9 @@ const App = () => {
                 {
                     label: 'Funcionários', icon: 'pi pi-fw pi-users', to: '/funcionarios'
                 },
+                {
+                    label: 'Serviços', icon: 'pi pi-fw pi-users', to: '/servicos'
+                },
             ]
         },
 
@@ -229,6 +210,7 @@ const App = () => {
                     <Route path="/cidades" component={Cidade}/>
                     <Route path="/clientes" component={Cliente}/>
                     <Route path="/funcionarios" component={Funcionario}/>
+                    <Route path="/servicos" component={Servico}/>
                 </div>
 
                 <AppFooter layoutColorMode={layoutColorMode}/>
