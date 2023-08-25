@@ -18,6 +18,7 @@ import Cidade from './pages/cadastros/Cidade';
 import Cliente from './pages/cadastros/Cliente';
 import Funcionario from './pages/cadastros/Funcionario';
 import Servico from './pages/cadastros/Servico';
+import Produto from './pages/cadastros/Produto';
 
 import 'primereact/resources/primereact.css';
 import 'primeicons/primeicons.css';
@@ -160,6 +161,9 @@ const App = () => {
                     label: 'Funcionários', icon: 'pi pi-fw pi-users', to: '/funcionarios'
                 },
                 {
+                    label: 'Produtos', icon: 'pi pi-fw pi-users', to: '/produtos'
+                },
+                {
                     label: 'Serviços', icon: 'pi pi-fw pi-users', to: '/servicos'
                 },
             ]
@@ -211,6 +215,7 @@ const App = () => {
                     <Route path="/clientes" component={Cliente}/>
                     <Route path="/funcionarios" component={Funcionario}/>
                     <Route path="/servicos" component={Servico}/>
+                    <Route path="/produtos" component={Produto}/>
                 </div>
 
                 <AppFooter layoutColorMode={layoutColorMode}/>
