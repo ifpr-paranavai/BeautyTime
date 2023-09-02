@@ -35,6 +35,7 @@ public class Usuario  implements UserDetails{
 
     private String nome;
     private String cpf;
+    private String telefone;
     private String email;
     private String codigoRecuperacaoSenha;
     @Temporal(TemporalType.TIMESTAMP)
@@ -45,6 +46,7 @@ public class Usuario  implements UserDetails{
     @ManyToOne
     @JoinColumn(name="idCidade")
     private Cidade cidade;
+    private String bairro;
 
     @OneToMany(mappedBy = "usuario", orphanRemoval = true, cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
     @Setter(value = AccessLevel.NONE)

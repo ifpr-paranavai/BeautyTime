@@ -1,4 +1,4 @@
-package com.gustavoorelio.beautytime.config;
+package com.gustavoorelio.beautytime.security;
 
 
 import java.util.Arrays;
