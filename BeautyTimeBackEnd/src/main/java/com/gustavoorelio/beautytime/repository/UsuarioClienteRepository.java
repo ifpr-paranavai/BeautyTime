@@ -1,10 +1,9 @@
 package com.gustavoorelio.beautytime.repository;
 
 
+import com.gustavoorelio.beautytime.model.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.gustavoorelio.beautytime.model.Usuario;
-
-public interface UsuarioClienteRepository extends JpaRepository<Usuario, Long>{
+public interface UsuarioClienteRepository extends JpaRepository<Usuario, Long> {
 
 }

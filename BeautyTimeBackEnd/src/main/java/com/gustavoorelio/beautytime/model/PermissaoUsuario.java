@@ -1,27 +1,16 @@
 package com.gustavoorelio.beautytime.model;
 
-import java.util.Date;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import lombok.Data;
+import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name = "permissao_usuario")
 @Data
-public class PermissaoUsuario implements GrantedAuthority{
+public class PermissaoUsuario implements GrantedAuthority {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -40,6 +29,7 @@ public class PermissaoUsuario implements GrantedAuthority{
     private Date dataCriacao;
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataAtualizacao;
+
     @Override
     public String getAuthority() {
         return permissao.getNome();
