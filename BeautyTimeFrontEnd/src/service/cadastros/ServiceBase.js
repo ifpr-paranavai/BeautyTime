@@ -1,4 +1,6 @@
 import axios from 'axios';
+import { config } from 'react-transition-group';
+import { LoginService } from '../util/LoginService';
 
 export class ServiceBase {
 
@@ -6,6 +8,7 @@ export class ServiceBase {
     constructor(urlBase) {
         this.url = urlBase + '/';
         this.inicializarAxios();
+        this.tratamentoErro401();
     }
 
     inicializarAxios() {
@@ -13,6 +16,29 @@ export class ServiceBase {
             baseURL: process.env.REACT_APP_URL_API,
         });
 
+        this.axiosInstance.interceptors.request.use((config) => {
+                const token = new LoginService().getToken();
+                const authRequestToken = token ? `Bearer ${token}` : '';
+                config.headers.common['Authorization'] = authRequestToken;
+                return config;
+            },
+            (error) => Promise.reject(error)
+        );
+    }
+
+    tratamentoErro401() {
+        this.axiosInstance.interceptors.response.use((response) => {
+            return response;
+        }, (erro) => {
+            console.log(erro.response.status);
+            if (erro.response.status == 401) {
+                if (!erro.request.response.includes("usuario-gerenciamento/login")) {
+                    new LoginService().sair();
+                    window.location.href = "/";
+                }
+            }
+            return Promise.reject(erro);
+        });
     }
 
     listarTodos() {
