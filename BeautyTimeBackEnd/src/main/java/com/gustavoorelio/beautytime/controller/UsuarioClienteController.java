@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
-@RequestMapping("/beautytime/usuario")
+@RequestMapping("/beautytime/usuario-cliente")
 @CrossOrigin
 public class UsuarioClienteController {
 
