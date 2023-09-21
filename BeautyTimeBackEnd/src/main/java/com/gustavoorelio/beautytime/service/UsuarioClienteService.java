@@ -28,11 +28,11 @@ public class UsuarioClienteService {
         usuario.setDataCriacao(new Date());
         Usuario objetoNovo = usuarioRepository.saveAndFlush(usuario);
         permissaoUsuarioService.vincularUsuarioPermissaoCliente(objetoNovo);
-        //emailService.enviarEmailTexto(objetoNovo.getEmail(), "Cadastro na Loja Tabajara", "O registro na loja foi realizado com sucesso. Em breve você receberá a senha de acesso por e-mail!!");
+        //emailService.enviarEmailTexto(objetoNovo.getEmail(), "Cadastro no BeautyTime", "O registro foi realizado com sucesso. Em breve você receberá a senha de acesso por e-mail!!");
         Map<String, Object> proprMap = new HashMap<>();
         proprMap.put("nome", objetoNovo.getNome());
-        proprMap.put("mensagem", "O registro na loja foi realizado com sucesso. Em breve você receberá a senha de acesso por e-mail!!");
-        emailService.enviarEmailTemplate(objetoNovo.getEmail(), "Cadastro na Loja Tabajara", proprMap);
+        proprMap.put("mensagem", "O registro foi realizado com sucesso. Em breve você receberá a senha de acesso por e-mail!!");
+        emailService.enviarEmailTemplate(objetoNovo.getEmail(), "Cadastro no BeautyTime", proprMap);
         return objetoNovo;
     }
 
