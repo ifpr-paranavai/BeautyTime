@@ -18,32 +18,32 @@ public class ServicoController {
 
     @GetMapping("/")
     @CrossOrigin("http://localhost:3000")
-    public List<Servico> buscarTodos(){
+    public List<Servico> buscarTodos() {
         return servicoService.buscarTodos();
     }
 
     @PostMapping("/")
     @CrossOrigin("http://localhost:3000")
-    public Servico inserir(@RequestBody Servico servico){
+    public Servico inserir(@RequestBody Servico servico) {
         return servicoService.inserir(servico);
     }
 
     @PutMapping("/")
     @CrossOrigin("http://localhost:3000")
-    public Servico alterar(@RequestBody Servico servico){
+    public Servico alterar(@RequestBody Servico servico) {
         return servicoService.alterar(servico);
     }
 
     @DeleteMapping("/{id}")
     @CrossOrigin("http://localhost:3000")
-    public ResponseEntity<Void> excluir(@PathVariable("id") Long id){
+    public ResponseEntity<Void> excluir(@PathVariable("id") Long id) {
         servicoService.excluir(id);
         return ResponseEntity.ok().build();
     }
 
     @GetMapping("/{id}")
     @CrossOrigin("http://localhost:3000")
-    public ResponseEntity<Servico> buscarPorId(@PathVariable("id") Long id){
+    public ResponseEntity<Servico> buscarPorId(@PathVariable("id") Long id) {
 
         return ResponseEntity.ok(servicoService.buscarPorId(id));
     }

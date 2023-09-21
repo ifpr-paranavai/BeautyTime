@@ -1,8 +1,6 @@
 package com.gustavoorelio.beautytime.controller;
 
 import com.gustavoorelio.beautytime.model.Cliente;
-import com.gustavoorelio.beautytime.model.Cliente;
-import com.gustavoorelio.beautytime.model.Usuario;
 import com.gustavoorelio.beautytime.service.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

@@ -3,7 +3,6 @@ package com.gustavoorelio.beautytime.model;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.Date;
 
 @Entity
 @Table(name = "cidade")
@@ -17,6 +16,6 @@ public class Cidade {
     private String nome;
 
     @ManyToOne
-    @JoinColumn(name="uf")
+    @JoinColumn(name = "uf")
     private Estado uf;
 }

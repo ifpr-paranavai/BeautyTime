@@ -3,7 +3,6 @@ package com.gustavoorelio.beautytime.model;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.Date;
 
 @Entity
 @Table(name = "estado")
