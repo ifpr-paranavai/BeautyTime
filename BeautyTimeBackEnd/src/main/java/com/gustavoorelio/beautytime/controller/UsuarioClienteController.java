@@ -19,6 +19,7 @@ public class UsuarioClienteController {
     private UsuarioClienteService usuarioService;
 
     @PostMapping("/")
+    @CrossOrigin("http://localhost:3000")
     public Usuario inserir(@RequestBody UsuarioClienteRequestDTO usuarioClienteRequestDTO){
         return usuarioService.registrar(usuarioClienteRequestDTO);
     }

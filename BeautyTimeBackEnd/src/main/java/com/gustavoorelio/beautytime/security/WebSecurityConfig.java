@@ -41,7 +41,7 @@ public class WebSecurityConfig {
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and().authorizeRequests().antMatchers("/beautytime/usuario-gerenciamento/**").permitAll()
-                .antMatchers("/beautytime/usuario/**").hasAnyAuthority("funcionario")
+                .antMatchers("/beautytime/usuario/**").hasAnyAuthority("cliente")
                 .anyRequest().authenticated();
 
         http.addFilterBefore(authFilterToken(), UsernamePasswordAuthenticationFilter.class);
