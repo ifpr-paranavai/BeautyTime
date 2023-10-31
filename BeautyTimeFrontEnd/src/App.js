@@ -19,7 +19,9 @@ import Cliente from './pages/cadastros/Cliente';
 import Funcionario from './pages/cadastros/Funcionario';
 import Servico from './pages/cadastros/Servico';
 import Produto from './pages/cadastros/Produto';
+import Permissao from "./pages/cadastros/Permissao";
 import Login from "./pages/Login";
+import Usuario from "./pages/cadastros/Usuario";
 import { LoginService } from './service/util/LoginService';
 
 import 'primereact/resources/primereact.css';
@@ -165,10 +167,16 @@ const App = () => {
                     label: 'Funcionários', icon: 'pi pi-fw pi-users', to: '/funcionarios'
                 },
                 {
+                    label: 'Permissões', icon: 'pi pi-fw pi-users', to: '/permissoes'
+                },
+                {
                     label: 'Produtos', icon: 'pi pi-fw pi-users', to: '/produtos'
                 },
                 {
                     label: 'Serviços', icon: 'pi pi-fw pi-users', to: '/servicos'
+                },
+                {
+                    label: 'Usuários', icon: 'pi pi-fw pi-users', to: '/usuarios'
                 },
             ]
         },
@@ -221,7 +229,9 @@ const App = () => {
                         <Route path="/funcionarios" component={Funcionario}/>
                         <Route path="/servicos" component={Servico}/>
                         <Route path="/produtos" component={Produto}/>
+                        <Route path="/permissoes" component={Permissao}/>
                         <Route path="/login" component={Login}/>
+                        <Route path="/usuarios" component={Usuario}/>
                     </div>
 
                     <AppFooter layoutColorMode={layoutColorMode}/>

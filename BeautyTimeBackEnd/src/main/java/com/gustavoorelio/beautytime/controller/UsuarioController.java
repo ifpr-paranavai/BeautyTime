@@ -27,21 +27,25 @@ public class UsuarioController {
     private UsuarioService usuarioService;
 
     @GetMapping("/")
+    @CrossOrigin("http://localhost:3000")
     public List<Usuario> buscarTodos(){
         return usuarioService.buscarTodos();
     }
 
     @PostMapping("/")
+    @CrossOrigin("http://localhost:3000")
     public Usuario inserir(@RequestBody Usuario objeto){
         return usuarioService.inserir(objeto);
     }
 
     @PutMapping("/")
+    @CrossOrigin("http://localhost:3000")
     public Usuario alterar(@RequestBody Usuario objeto){
         return usuarioService.alterar(objeto);
     }
 
     @DeleteMapping("/{id}")
+    @CrossOrigin("http://localhost:3000")
     public ResponseEntity<Void> excluir(@PathVariable("id") Long id){
         usuarioService.excluir(id);
         return ResponseEntity.ok().build();
