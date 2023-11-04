@@ -1,5 +1,6 @@
 import React, {useEffect, useRef, useState} from 'react';
 import classNames from 'classnames';
+import { useFormik } from 'formik';
 import {DataTable} from 'primereact/datatable';
 import {Column} from 'primereact/column';
 import {Toast} from 'primereact/toast';
@@ -8,15 +9,22 @@ import {Toolbar} from 'primereact/toolbar';
 import {Dialog} from 'primereact/dialog';
 import {InputText} from 'primereact/inputtext';
 import {AgendamentoService} from '../../service/cadastros/AgendamentoService';
-import {Dropdown} from 'primereact/dropdown';
+import { UsuarioService } from '../../service/cadastros/UsuarioService';
 import ColunaOpcoes from '../../components/ColunaOpcoes';
+import {MultiSelect} from "primereact/multiselect";
+import DatePicker, { registerLocale } from "react-datepicker";
+import ptBR from 'date-fns/locale/pt-BR';
+
+registerLocale('pt-br',ptBR)
+
 
 const Agendamento = () => {
     let objetoNovo = {
-        dataAgendamento: '', horarioAgendamento: '', observacao: '',
+        usuario: [], dataHoraAgendamento: new Date(), observacao: '',
     };
 
     const [objetos, setObjetos] = useState(null);
+    const [usuario, setUsuario] = useState(null);
     const [objetoDialog, setObjetoDialog] = useState(false);
     const [objetoDeleteDialog, setObjetoDeleteDialog] = useState(false);
     const [objeto, setObjeto] = useState(objetoNovo);
@@ -25,6 +33,22 @@ const Agendamento = () => {
     const toast = useRef(null);
     const dt = useRef(null);
     const objetoService = new AgendamentoService();
+    const usuarioService = new UsuarioService();
+
+    const DateInput = (props) => {
+
+        return (
+            <DatePicker
+                type="date"
+                locale="pt-br"
+                dateFormat="dd/MM/yyyy"
+                selected={props.startdate}
+                onChange={props.onChange}
+                value={props.value}
+                className={props.className}
+            />
+        );
+    }
 
     useEffect(() => {
         if (objetos == null) {
@@ -34,6 +58,21 @@ const Agendamento = () => {
             });
         }
     }, [objetos]);
+
+    useEffect(() => {
+        usuarioService.listarTodos().then(res => {
+            let usuariosTemporarios = [];
+            res.data.forEach(element => {
+                usuariosTemporarios.push({ usuario: element });
+            });
+            setUsuario(usuariosTemporarios);
+        });
+    }, []);
+
+    const formik = useFormik({
+        enableReinitialize: true,
+        initialValues: objeto,
+    });
 
     const openNew = () => {
         setObjeto(objetoNovo);
@@ -190,14 +229,15 @@ const Agendamento = () => {
                 <Dialog visible={objetoDialog} style={{width: '450px'}} header="Cadastrar/Editar" modal className="p-fluid" footer={objetoDialogFooter} onHide={hideDialog}>
 
                     <div className="field">
-                        <label htmlFor="dataAgendamento">Data Agendamento</label>
-                        <InputText id="dataAgendamento" value={objeto.dataAgendamento} onChange={(e) => onInputChange(e, 'dataAgendamento')} required autoFocus className={classNames({'p-invalid': submitted && !objeto.dataAgendamento})}/>
-                        {submitted && !objeto.name && <small className="p-invalid">Data Agendamento é obrigatório.</small>}
+                        <label htmlFor="usuario">Usuario</label>
+                        <MultiSelect dataKey="usuario.id" id="usuario" value={formik.values.usuario} options={usuario} onChange={formik.handleChange} optionLabel="usuario.nome" placeholder="Selecione o cliente" />
                     </div>
                     <div className="field">
-                        <label htmlFor="horarioAgendamento">Horario Agendamento</label>
-                        <InputText id="horarioAgendamento" value={objeto.horarioAgendamento} onChange={(e) => onInputChange(e, 'horarioAgendamento')} required autoFocus className={classNames({'p-invalid': submitted && !objeto.horarioAgendamento})}/>
-                        {submitted && !objeto.name && <small className="p-invalid">Horario Agendamento é Obrigatório.</small>}
+                        <label htmlFor="dataAgendamento">Data Agendamento</label>
+                        <DateInput
+
+                            id="dataAgendamento" value={objeto.dataHoraAgendamento} onChange={(e) => onInputChange(e, 'dataAgendamento')} required autoFocus className={classNames({'p-invalid': submitted && !objeto.dataHoraAgendamento})}/>
+                        {submitted && !objeto.name && <small className="p-invalid">Data Agendamento é obrigatório.</small>}
                     </div>
                     <div className="field">
                         <label htmlFor="observacao">Observação</label>
