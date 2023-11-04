@@ -3,25 +3,21 @@ package com.gustavoorelio.beautytime.model;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.sql.Time;
 import java.util.Date;
 
 @Entity
-@Table(name = "agendamento")
+@Table(name = "venda")
 @Data
-public class Agendamento {
+public class Venda {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "usuario")
-    private Usuario usuario;
+    private String formaPagamento;
 
     @Temporal(TemporalType.TIMESTAMP)
-    private Date dataHoraAgendamento;
-
-    private String observacao;
+    private Date dataVenda;
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataCadastro;
