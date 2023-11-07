@@ -12,11 +12,7 @@ import {AgendamentoService} from '../../service/cadastros/AgendamentoService';
 import { UsuarioService } from '../../service/cadastros/UsuarioService';
 import ColunaOpcoes from '../../components/ColunaOpcoes';
 import {MultiSelect} from "primereact/multiselect";
-import DatePicker, { registerLocale } from "react-datepicker";
-import ptBR from 'date-fns/locale/pt-BR';
-
-registerLocale('pt-br',ptBR)
-
+import {Calendar} from "primereact/calendar";
 
 const Agendamento = () => {
     let objetoNovo = {
@@ -35,19 +31,14 @@ const Agendamento = () => {
     const objetoService = new AgendamentoService();
     const usuarioService = new UsuarioService();
 
-    const DateInput = (props) => {
+    function setDateTime24h() {
+        // Sua lógica para definir a variável setDateTime24h aqui
+        let date = new Date();
+        let hours = date.getHours();
+        let minutes = date.getMinutes();
+        let seconds = date.getSeconds();
 
-        return (
-            <DatePicker
-                type="date"
-                locale="pt-br"
-                dateFormat="dd/MM/yyyy"
-                selected={props.startdate}
-                onChange={props.onChange}
-                value={props.value}
-                className={props.className}
-            />
-        );
+        return `${hours}:${minutes}:${seconds}`;
     }
 
     useEffect(() => {
@@ -93,19 +84,18 @@ const Agendamento = () => {
     const saveObjeto = () => {
         setSubmitted(true);
 
-        if (objeto.nome.trim()) {
-            let _objeto = {...objeto};
+        if (objeto.observacao.trim()) {
+            let _objeto = { ...objeto };
             if (objeto.id) {
                 objetoService.alterar(_objeto).then(data => {
-                    toast.current.show({severity: 'success', summary: 'Sucesso', detail: 'Alterado com Sucesso', life: 3000});
+                    toast.current.show({ severity: 'success', summary: 'Sucesso', detail: 'Alterado com Sucesso', life: 3000 });
                     setObjetos(null);
                 });
             } else {
                 objetoService.inserir(_objeto).then(data => {
-                    toast.current.show({severity: 'success', summary: 'Sucesso', detail: 'Inserido com Sucesso', life: 3000});
+                    toast.current.show({ severity: 'success', summary: 'Sucesso', detail: 'Inserido com Sucesso', life: 3000 });
                     setObjetos(null);
                 });
-
             }
             setObjetoDialog(false);
             setObjeto(objetoNovo);
@@ -167,18 +157,27 @@ const Agendamento = () => {
     }
 
     const dataBodyTemplate = (rowData) => {
-        return (<>
-            <span className="p-column-title">Data Agendamento</span>
-            {rowData.dataAgendamento}
-        </>);
+        const dataHora = new Date(rowData.dataHoraAgendamento);
+
+        const dataFormatada = dataHora.toLocaleDateString('pt-BR', {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric'
+        });
+
+        const horaFormatada = dataHora.toLocaleTimeString('pt-BR', {
+            hour: '2-digit',
+            minute: '2-digit'
+        });
+
+        return (
+            <>
+                <span className="p-column-title">Data e Hora Agendamento</span>
+                <span>{dataFormatada} {horaFormatada}</span>
+            </>
+        );
     }
 
-    const horarioBodyTemplate = (rowData) => {
-        return (<>
-            <span className="p-column-title">Horário Agendamento</span>
-            {rowData.horarioAgendamento}
-        </>);
-    }
 
     const observacaoBodyTemplate = (rowData) => {
         return (<>
@@ -218,8 +217,7 @@ const Agendamento = () => {
                            currentPageReportTemplate="Mostrando {first} de {last}. Total de {totalRecords}"
                            globalFilter={globalFilter} emptyMessage="Sem objetos cadastrados." header={header} responsiveLayout="scroll">
                     <Column field="id" header="ID" sortable body={idBodyTemplate} headerStyle={{width: '14%', minWidth: '10rem'}}></Column>
-                    <Column field="dataAgendamento" header="Data Agendamento" sortable body={dataBodyTemplate} headerStyle={{width: '14%', minWidth: '10rem'}}></Column>
-                    <Column field="horarioAgendamento" header="Horario Agendamento" sortable body={horarioBodyTemplate} headerStyle={{width: '14%', minWidth: '10rem'}}></Column>
+                    <Column field="dataHoraAgendamento" header="Data Hora Agendamento" sortable body={dataBodyTemplate} headerStyle={{width: '14%', minWidth: '10rem'}}></Column>
                     <Column field="observacao" header="Observação" sortable body={observacaoBodyTemplate} headerStyle={{width: '14%', minWidth: '10rem'}}></Column>
                     <Column body={rowData => {
                         return <ColunaOpcoes rowData={rowData} editObjeto={editObjeto} confirmDeleteObjeto={confirmDeleteObjeto}/>
@@ -233,10 +231,14 @@ const Agendamento = () => {
                         <MultiSelect dataKey="usuario.id" id="usuario" value={formik.values.usuario} options={usuario} onChange={formik.handleChange} optionLabel="usuario.nome" placeholder="Selecione o cliente" />
                     </div>
                     <div className="field">
-                        <label htmlFor="dataAgendamento">Data Agendamento</label>
-                        <DateInput
+                        <label htmlFor="dataHoraAgendamento">Data Agendamento</label>
+                        <Calendar
+                            value={objeto.dataHoraAgendamento}
+                            onChange={(e) => onInputChange({ target: { value: e.value } }, 'dataHoraAgendamento')}
+                            showTime
+                            hourFormat="24"
+                        />
 
-                            id="dataAgendamento" value={objeto.dataHoraAgendamento} onChange={(e) => onInputChange(e, 'dataAgendamento')} required autoFocus className={classNames({'p-invalid': submitted && !objeto.dataHoraAgendamento})}/>
                         {submitted && !objeto.name && <small className="p-invalid">Data Agendamento é obrigatório.</small>}
                     </div>
                     <div className="field">

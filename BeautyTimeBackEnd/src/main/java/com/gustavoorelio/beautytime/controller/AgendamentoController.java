@@ -17,25 +17,21 @@ public class AgendamentoController {
     private AgendamentoService agendamentoService;
 
     @GetMapping("/")
-    @CrossOrigin("http://localhost:3000")
     public List<Agendamento> buscarTodos() {
         return agendamentoService.buscarTodos();
     }
 
     @PostMapping("/")
-    @CrossOrigin("http://localhost:3000")
     public Agendamento inserir(@RequestBody Agendamento agendamento) {
         return agendamentoService.inserir(agendamento);
     }
 
     @PutMapping("/")
-    @CrossOrigin("http://localhost:3000")
     public Agendamento alterar(@RequestBody Agendamento agendamento) {
         return agendamentoService.alterar(agendamento);
     }
 
     @DeleteMapping("/{id}")
-    @CrossOrigin("http://localhost:3000")
     public ResponseEntity<Void> excluir(@PathVariable("id") Long id) {
         agendamentoService.excluir(id);
         return ResponseEntity.ok().build();

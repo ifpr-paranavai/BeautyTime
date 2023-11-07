@@ -19,13 +19,11 @@ public class FuncionarioService {
     }
 
     public Funcionario inserir(Funcionario funcionario) {
-        funcionario.setDataCadastro(new Date());
         Funcionario funcionarioNovo = funcionarioRepository.saveAndFlush(funcionario);
         return funcionarioNovo;
     }
 
     public Funcionario alterar(Funcionario funcionario) {
-        funcionario.setDataCadastro(new Date());
         return funcionarioRepository.saveAndFlush(funcionario);
     }
 

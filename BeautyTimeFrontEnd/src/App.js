@@ -33,6 +33,7 @@ import './assets/demo/flags/flags.css';
 import './assets/demo/Demos.scss';
 import './assets/layout/layout.scss';
 import './App.scss';
+import EsqueceuSenha from "./pages/cadastros/EsqueceuSenha";
 
 
 const App = () => {
@@ -237,6 +238,7 @@ const App = () => {
                         <Route path="/login" component={Login}/>
                         <Route path="/agendamentos" component={Agendamento}/>
                         <Route path="/usuarios" component={Usuario}/>
+                        <Route path="/recuperar-senha" component={EsqueceuSenha} />
                     </div>
 
                     <AppFooter layoutColorMode={layoutColorMode}/>

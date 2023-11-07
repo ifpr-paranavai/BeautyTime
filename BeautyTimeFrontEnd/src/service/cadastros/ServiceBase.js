@@ -13,7 +13,7 @@ export class ServiceBase {
 
     inicializarAxios() {
         this.axiosInstance = axios.create({
-            baseURL: process.env.REACT_APP_URL_API,
+            baseURL: "http://localhost:8080/beautytime",
         });
 
         this.axiosInstance.interceptors.request.use((config) => {

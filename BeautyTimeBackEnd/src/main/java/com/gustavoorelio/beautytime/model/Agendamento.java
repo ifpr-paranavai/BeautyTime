@@ -1,6 +1,7 @@
 package com.gustavoorelio.beautytime.model;
 
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.sql.Time;
@@ -13,10 +14,6 @@ public class Agendamento {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
-    @ManyToOne
-    @JoinColumn(name = "usuario")
-    private Usuario usuario;
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataHoraAgendamento;
