@@ -13,14 +13,15 @@ import { UsuarioService } from '../../service/cadastros/UsuarioService';
 import ColunaOpcoes from '../../components/ColunaOpcoes';
 import {MultiSelect} from "primereact/multiselect";
 import {Calendar} from "primereact/calendar";
+import {Dropdown} from "primereact/dropdown";
+import {ServicoService} from "../../service/cadastros/ServicoService";
 
 const Agendamento = () => {
     let objetoNovo = {
-        usuario: [], dataHoraAgendamento: new Date(), observacao: '',
+        usuario: [], servico: [], dataHoraAgendamento: new Date(), observacao: '',
     };
 
     const [objetos, setObjetos] = useState(null);
-    const [usuario, setUsuario] = useState(null);
     const [objetoDialog, setObjetoDialog] = useState(false);
     const [objetoDeleteDialog, setObjetoDeleteDialog] = useState(false);
     const [objeto, setObjeto] = useState(objetoNovo);
@@ -29,7 +30,10 @@ const Agendamento = () => {
     const toast = useRef(null);
     const dt = useRef(null);
     const objetoService = new AgendamentoService();
+    const [usuario, setUsuarios] = useState([]);
     const usuarioService = new UsuarioService();
+    const [servico, setServicos] = useState([]);
+    const servicoService = new ServicoService();
 
     function setDateTime24h() {
         // Sua lógica para definir a variável setDateTime24h aqui
@@ -52,11 +56,13 @@ const Agendamento = () => {
 
     useEffect(() => {
         usuarioService.listarTodos().then(res => {
-            let usuariosTemporarios = [];
-            res.data.forEach(element => {
-                usuariosTemporarios.push({ usuario: element });
-            });
-            setUsuario(usuariosTemporarios);
+            setUsuarios(res.data);
+        });
+    }, []);
+
+    useEffect(() => {
+        servicoService.listarTodos().then(res => {
+            setServicos(res.data);
         });
     }, []);
 
@@ -156,6 +162,17 @@ const Agendamento = () => {
         </>);
     }
 
+    const usuarioBodyTemplate = (rowData) => {
+        const usuario = usuario.find(u => u.id === rowData.usuario);
+        return (
+            <>
+                <span className="p-column-title">Cliente</span>
+                {usuario ? usuario.nome : 'Não encontrado'}
+            </>
+        );
+    }
+
+
     const dataBodyTemplate = (rowData) => {
         const dataHora = new Date(rowData.dataHoraAgendamento);
 
@@ -182,7 +199,7 @@ const Agendamento = () => {
     const observacaoBodyTemplate = (rowData) => {
         return (<>
             <span className="p-column-title">Observação</span>
-            R$ {rowData.observacao}
+            {rowData.observacao}
         </>);
     }
 
@@ -217,6 +234,7 @@ const Agendamento = () => {
                            currentPageReportTemplate="Mostrando {first} de {last}. Total de {totalRecords}"
                            globalFilter={globalFilter} emptyMessage="Sem objetos cadastrados." header={header} responsiveLayout="scroll">
                     <Column field="id" header="ID" sortable body={idBodyTemplate} headerStyle={{width: '14%', minWidth: '10rem'}}></Column>
+                    {/*<Column field="usuario" header="Cliente" sortable body={usuarioBodyTemplate} headerStyle={{width: '14%', minWidth: '10rem'}}></Column>*/}
                     <Column field="dataHoraAgendamento" header="Data Hora Agendamento" sortable body={dataBodyTemplate} headerStyle={{width: '14%', minWidth: '10rem'}}></Column>
                     <Column field="observacao" header="Observação" sortable body={observacaoBodyTemplate} headerStyle={{width: '14%', minWidth: '10rem'}}></Column>
                     <Column body={rowData => {
@@ -227,8 +245,8 @@ const Agendamento = () => {
                 <Dialog visible={objetoDialog} style={{width: '450px'}} header="Cadastrar/Editar" modal className="p-fluid" footer={objetoDialogFooter} onHide={hideDialog}>
 
                     <div className="field">
-                        <label htmlFor="usuario">Usuario</label>
-                        <MultiSelect dataKey="usuario.id" id="usuario" value={formik.values.usuario} options={usuario} onChange={formik.handleChange} optionLabel="usuario.nome" placeholder="Selecione o cliente" />
+                        <label htmlFor="nome">Cliente</label>
+                        <Dropdown optionLabel="nome" value={objeto.usuario} options={usuario} filter onChange={(e) => onInputChange(e, 'usuario')} placeholder="Selecione um Cliente"/>
                     </div>
                     <div className="field">
                         <label htmlFor="dataHoraAgendamento">Data Agendamento</label>
@@ -242,9 +260,12 @@ const Agendamento = () => {
                         {submitted && !objeto.name && <small className="p-invalid">Data Agendamento é obrigatório.</small>}
                     </div>
                     <div className="field">
+                        <label htmlFor="nome">Serviço</label>
+                        <Dropdown optionLabel="nome" value={objeto.servico} options={servico} filter onChange={(e) => onInputChange(e, 'servico')} placeholder="Selecione um Serviço"/>
+                    </div>
+                    <div className="field">
                         <label htmlFor="observacao">Observação</label>
-                        <InputText id="observacao" value={objeto.observacao} onChange={(e) => onInputChange(e, 'observacao')} required autoFocus className={classNames({'p-invalid': submitted && !objeto.observacao})}/>
-                        {submitted && !objeto.name && <small className="p-invalid">Observaçao é Obrigatório.</small>}
+                        <InputText id="observacao" value={objeto.observacao} onChange={(e) => onInputChange(e, 'observacao')}  autoFocus className={classNames({'p-invalid': submitted && !objeto.observacao})}/>
                     </div>
 
                 </Dialog>

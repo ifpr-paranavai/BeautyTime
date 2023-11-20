@@ -13,7 +13,7 @@ export class ServiceBase {
 
     inicializarAxios() {
         this.axiosInstance = axios.create({
-            baseURL: "http://localhost:8080/beautytime",
+            baseURL: "http://localhost:8081/beautytime",
         });
 
         this.axiosInstance.interceptors.request.use((config) => {
