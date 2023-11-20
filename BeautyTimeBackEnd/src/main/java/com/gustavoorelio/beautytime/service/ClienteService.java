@@ -19,13 +19,11 @@ public class ClienteService {
     }
 
     public Cliente inserir(Cliente cliente) {
-        cliente.setDataCadastro(new Date());
         Cliente clienteNovo = clienteRepository.saveAndFlush(cliente);
         return clienteNovo;
     }
 
     public Cliente alterar(Cliente cliente) {
-        cliente.setDataCadastro(new Date());
         return clienteRepository.saveAndFlush(cliente);
     }
 

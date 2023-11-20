@@ -1,24 +1,24 @@
 package com.gustavoorelio.beautytime.model;
 
-import lombok.Data;
-import org.springframework.format.annotation.DateTimeFormat;
-
 import javax.persistence.*;
-import java.sql.Time;
 import java.util.Date;
 
-@Entity
-@Table(name = "agendamento")
-@Data
-public class Agendamento {
+public class VendaProduto {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date dataHoraAgendamento;
+    private Double quantidade;
+    private Double valor;
 
-    private String observacao;
+    @OneToMany
+    @JoinColumn(name = "idVenda")
+    private Venda venda;
+
+    @ManyToOne
+    @JoinColumn(name = "idProduto")
+    private Produto produto;
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataCadastro;

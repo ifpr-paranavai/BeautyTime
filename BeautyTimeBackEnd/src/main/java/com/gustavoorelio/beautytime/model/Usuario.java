@@ -14,6 +14,8 @@ import java.util.List;
 @Entity
 @Table(name = "usuario")
 @Data
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "user_type", discriminatorType = DiscriminatorType.STRING)
 public class Usuario implements UserDetails {
 
     @Id
@@ -53,7 +55,6 @@ public class Usuario implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-
         return permissaoUsuarios;
     }
 

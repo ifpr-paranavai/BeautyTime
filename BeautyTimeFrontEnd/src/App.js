@@ -20,6 +20,7 @@ import Funcionario from './pages/cadastros/Funcionario';
 import Servico from './pages/cadastros/Servico';
 import Produto from './pages/cadastros/Produto';
 import Permissao from "./pages/cadastros/Permissao";
+import Agendamento from "./pages/cadastros/Agendamento";
 import Login from "./pages/Login";
 import Usuario from "./pages/cadastros/Usuario";
 import { LoginService } from './service/util/LoginService';
@@ -32,6 +33,7 @@ import './assets/demo/flags/flags.css';
 import './assets/demo/Demos.scss';
 import './assets/layout/layout.scss';
 import './App.scss';
+import EsqueceuSenha from "./pages/cadastros/EsqueceuSenha";
 
 
 const App = () => {
@@ -155,6 +157,9 @@ const App = () => {
             label: 'Cadastros',
             items: [
                 {
+                    label: 'Agendamentos', icon: 'pi pi-fw pi-map', to: '/agendamentos'
+                },
+                {
                     label: 'Cidades', icon: 'pi pi-fw pi-map', to: '/cidades'
                 },
                 {
@@ -231,7 +236,9 @@ const App = () => {
                         <Route path="/produtos" component={Produto}/>
                         <Route path="/permissoes" component={Permissao}/>
                         <Route path="/login" component={Login}/>
+                        <Route path="/agendamentos" component={Agendamento}/>
                         <Route path="/usuarios" component={Usuario}/>
+                        <Route path="/recuperar-senha" component={EsqueceuSenha} />
                     </div>
 
                     <AppFooter layoutColorMode={layoutColorMode}/>
