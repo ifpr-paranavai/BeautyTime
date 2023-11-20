@@ -1,10 +1,10 @@
 package com.gustavoorelio.beautytime.model;
 
 import lombok.Data;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import java.sql.Time;
+import javax.validation.constraints.Future;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Entity
@@ -15,6 +15,8 @@ public class Agendamento {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @NotNull(message = "A data e hora do agendamento são obrigatórias")
+    @Future(message = "A data e hora do agendamento devem ser futuras")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataHoraAgendamento;
 

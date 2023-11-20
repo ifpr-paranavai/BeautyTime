@@ -13,6 +13,7 @@ import { UsuarioService } from '../../service/cadastros/UsuarioService';
 import ColunaOpcoes from '../../components/ColunaOpcoes';
 import {MultiSelect} from "primereact/multiselect";
 import {Calendar} from "primereact/calendar";
+import {Dropdown} from "primereact/dropdown";
 
 const Agendamento = () => {
     let objetoNovo = {
@@ -20,7 +21,6 @@ const Agendamento = () => {
     };
 
     const [objetos, setObjetos] = useState(null);
-    const [usuario, setUsuario] = useState(null);
     const [objetoDialog, setObjetoDialog] = useState(false);
     const [objetoDeleteDialog, setObjetoDeleteDialog] = useState(false);
     const [objeto, setObjeto] = useState(objetoNovo);
@@ -29,7 +29,8 @@ const Agendamento = () => {
     const toast = useRef(null);
     const dt = useRef(null);
     const objetoService = new AgendamentoService();
-    const usuarioService = new UsuarioService();
+    const [usuarios, setUsuarios] = useState([]);
+    const usuarioService = new UsuarioService(); // Certifique-se de que este serviço esteja implementado
 
     function setDateTime24h() {
         // Sua lógica para definir a variável setDateTime24h aqui
@@ -51,12 +52,8 @@ const Agendamento = () => {
     }, [objetos]);
 
     useEffect(() => {
-        usuarioService.listarTodos().then(res => {
-            let usuariosTemporarios = [];
-            res.data.forEach(element => {
-                usuariosTemporarios.push({ usuario: element });
-            });
-            setUsuario(usuariosTemporarios);
+        usuarioService.listarTodos().then(data => {
+            setUsuarios(data);
         });
     }, []);
 
@@ -182,7 +179,7 @@ const Agendamento = () => {
     const observacaoBodyTemplate = (rowData) => {
         return (<>
             <span className="p-column-title">Observação</span>
-            R$ {rowData.observacao}
+            {rowData.observacao}
         </>);
     }
 
@@ -227,8 +224,14 @@ const Agendamento = () => {
                 <Dialog visible={objetoDialog} style={{width: '450px'}} header="Cadastrar/Editar" modal className="p-fluid" footer={objetoDialogFooter} onHide={hideDialog}>
 
                     <div className="field">
-                        <label htmlFor="usuario">Usuario</label>
-                        <MultiSelect dataKey="usuario.id" id="usuario" value={formik.values.usuario} options={usuario} onChange={formik.handleChange} optionLabel="usuario.nome" placeholder="Selecione o cliente" />
+                        <label htmlFor="usuario">Usuário</label>
+                        <Dropdown
+                            value={formik.values.usuario}
+                            options={usuarios}
+                            onChange={formik.handleChange}
+                            optionLabel="nome" // ajuste conforme a propriedade do seu objeto usuário
+                            placeholder="Selecione um usuário"
+                        />
                     </div>
                     <div className="field">
                         <label htmlFor="dataHoraAgendamento">Data Agendamento</label>
